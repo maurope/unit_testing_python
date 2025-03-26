@@ -6,8 +6,19 @@ def calculate_total(products):
 
 def test_calculate_total_with_empty_list():
     print('prueba')
-    
+
     assert calculate_total([]) == 0
+
+
+def test_calculate_total_with_single_product():
+    products = [
+        {
+            'name': 'Notebook', 'price':5
+        }
+    ]
+    assert calculate_total(products) == 10
+
 
 if __name__ == "__main__":
     test_calculate_total_with_empty_list()
+    test_calculate_total_with_single_product()
