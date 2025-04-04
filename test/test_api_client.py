@@ -17,3 +17,5 @@ class apiClientTests(unittest.TestCase):
         self.assertEqual(result.get('country'), 'USA')
         self.assertEqual(result.get('region'), 'FLORIDA')
         self.assertEqual(result.get('city'), 'MIAMI')
+
+        mock_get.assert_called_once_with('https://freeipapi.com/api/json/8.8.8.8')
