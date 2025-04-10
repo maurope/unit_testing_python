@@ -1,4 +1,4 @@
-import unittest
+import unittest, os
 from faker import Faker
 from src.user import User
 from src.bank_account import BankAccount
@@ -7,7 +7,7 @@ class UserTest(unittest.TestCase):
 
     def setUp(self) -> None:
         self.faker = Faker(locale='es')
-        
+        self.user = User(name=self.faker.name(), email=self.faker.email())
 
     def test_user_creation(self):
         name_generated = self.faker.name()
@@ -24,8 +24,12 @@ class UserTest(unittest.TestCase):
                 self.faker.random_int(min=100, max=2000, step=50),
                 log_file = self.faker.file_name(extension = '.txt')
             )
-            user.add_account(account=bank_account)
+            self.user.add_account(account=bank_account)
 
-        expected_value = user.get_total_balance()
-        value = sum(account.get_balance() for account in user.accounts)
+        expected_value = self.user.get_total_balance()
+        value = sum(account.get_balance() for account in self.user.accounts)
         self.assertEqual(value, expected_value)
+
+    def tearDown(self):
+        for account in self.user.accounts:
+            os.remove(account.log_file)
